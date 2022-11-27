@@ -4,8 +4,9 @@ if [ -z "$DEVICE" ]; then
 	exit 1
 fi
 DEV=${LOCAL_PATH}/../$DEVICE
-VENDOR=$(cat ${LOCAL_PATH}/vendor_name)
-if [ ! -z $VENDOR ]; then
+if [ -e "${LOCAL_PATH}/vendor_name" ]; then
+	VENDOR=$(cat ${LOCAL_PATH}/vendor_name)
+else
 	VENDOR=aosp
 fi
 
@@ -44,4 +45,4 @@ else
 	fi
 fi
 echo "PRODUCT_NAME := ${VENDOR}_${DEVICE}" >> "$ORIGIN_DEVICEMK"
-mv $ORIGIN_DEVICEMK $TARGET_DEVICEMK
+mv -f $ORIGIN_DEVICEMK $TARGET_DEVICEMK
